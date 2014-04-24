@@ -1,0 +1,11 @@
+{
+	"ImportPath": "go-diameter-cca-client",
+	"GoVersion": "go1.2.1",
+	"Deps": [
+		{
+			"ImportPath": "github.com/fiorix/go-diameter/diam",
+			"Comment": "v2.0.1-2-g30e433b",
+			"Rev": "30e433bb297070052ce7ed235b963fd0aa8e5d2f"
+		}
+	]
+}
