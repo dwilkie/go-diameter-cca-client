@@ -6,6 +6,15 @@ A Diameter Credit-Control Application Client written in Go
 
 Use [forego](https://github.com/ddollar/forego) for development.
 
+### Start the test server
+
+```
+cd src/github.com/fiorix/go-diameter/examples/server
+go run server
+```
+
+### Run the client
+
 ```
 cd go-diameter-cca-client
 go get
