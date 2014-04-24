@@ -31,6 +31,19 @@ forego start
 
 ## Deployment
 
+### Updating
+
+```
+cd go
+go get github.com/dwilkie/go-diameter-cca-client
+```
+
+### Testing Live Connection
+
+```
+SERVER_ADDRESS=host:port go-diameter-cca-client
+```
+
 See also [forego#20](https://github.com/ddollar/forego/issues/20)
 
 We might be able to create something similar to what [foreman](https://github.com/ddollar/foreman/blob/master/lib/foreman/export/upstart.rb) does
