@@ -8,7 +8,6 @@ package main
 
 import (
   "flag"
-  "fmt"
   "log"
   "math/rand"
   "net"
@@ -36,17 +35,13 @@ const (
 func main() {
   ssl := flag.Bool("ssl", false, "connect using SSL/TLS")
   flag.Parse()
-  if len(os.Args) < 2 {
-    fmt.Println("Use: client [-ssl] host:port")
-    return
-  }
   // ALL incoming messages are handled here.
   diam.HandleFunc("ALL", func(c diam.Conn, m *diam.Message) {
     log.Printf("Receiving message from %s", c.RemoteAddr().String())
     log.Println(m)
   })
   // Connect using the default handler and base.Dict.
-  addr := os.Args[len(os.Args)-1]
+  addr := os.Getenv("SERVER_ADDRESS")
   log.Println("Connecting to", addr)
   var (
     c   diam.Conn

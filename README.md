@@ -4,7 +4,13 @@ A Diameter Credit-Control Application Client written in Go
 
 ## Development
 
-Use [forego](https://github.com/ddollar/forego) for development
+Use [forego](https://github.com/ddollar/forego) for development.
+
+```
+cd go-diameter-cca-client
+go get
+forego start
+```
 
 ## Resources
 

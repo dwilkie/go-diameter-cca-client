@@ -1,1 +1,1 @@
-client: go-diameter-cca-client localhost:3868
+client: go-diameter-cca-client
