@@ -35,7 +35,7 @@ forego start
 
 ```
 cd go
-go get github.com/dwilkie/go-diameter-cca-client
+go get -u github.com/dwilkie/go-diameter-cca-client
 ```
 
 ### Testing Live Connection
