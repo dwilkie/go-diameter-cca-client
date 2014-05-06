@@ -72,7 +72,7 @@ func NewClient(c diam.Conn) {
   ip, _, _ := net.SplitHostPort(laddr.String())
   m.NewAVP("Host-IP-Address", 0x40, 0x0, datatypes.Address(net.ParseIP(ip)))
   m.NewAVP("Vendor-Id", 0x40, 0x0, VendorId)
-  m.NewAVP("Product-Name", 0x40, 0x0, ProductName)
+  //m.NewAVP("Product-Name", 0x40, 0x0, ProductName)
   m.NewAVP("Auth-Application-Id", 0x40, 0x0, AuthApplicationId)
   m.NewAVP("Service-Context-Id", 0x40, 0x0, ServiceContextId) // Could be optional
   m.NewAVP("CC-Request-Type", 0x40, 0x0, CCRequestType)
