@@ -16,7 +16,7 @@ import (
 
   "github.com/dwilkie/go-diameter/diam"
   "github.com/dwilkie/go-diameter/diam/datatypes"
-  "github.com/dwilkie/go-diameter/diam/dict"
+  //"github.com/dwilkie/go-diameter/diam/dict"
 )
 
 const (
