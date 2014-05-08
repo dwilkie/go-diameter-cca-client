@@ -66,7 +66,7 @@ func main() {
 func NewClient(c diam.Conn) {
   // Build CCR
 
-  dictionary := dict.CreditControl
+  //dictionary := dict.CreditControl
   m := diam.NewRequest(272, 0, nil)
   // Add AVPs
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
