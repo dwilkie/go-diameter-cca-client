@@ -64,7 +64,9 @@ func main() {
 // NewClient sends a CER to the server and then a DWR every 10 seconds.
 func NewClient(c diam.Conn) {
   // Build CCR
-  m := diam.NewRequest(272, 0, nil)
+
+  dictionary := dict.CreditControl
+  m := diam.NewRequest(272, 0, dictionary)
   // Add AVPs
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
   m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
