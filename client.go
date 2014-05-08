@@ -30,7 +30,7 @@ const (
   CCRequestNumber = datatypes.Unsigned32(0)
   RequestedAction = datatypes.Enumerated(0x00)
   SubscriptionIdType = datatypes.Enumerated(0x00) // E164
-  SubscriptionIdData = datatypes.UTF8String("85560234567")
+  SubscriptionIdData = datatypes.UTF8String("85512239136")
 )
 
 func main() {
