@@ -24,6 +24,7 @@ forego start
 ### Update the dependencies
 
 ```
+go get -u github.com/dwilkie/go-diameter/diam
 godep update github.com/dwilkie/go-diameter/diam
 ```
 
