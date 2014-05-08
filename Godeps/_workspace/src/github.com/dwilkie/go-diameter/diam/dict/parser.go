@@ -14,7 +14,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/fiorix/go-diameter/diam/datatypes"
+	"github.com/dwilkie/go-diameter/diam/datatypes"
 )
 
 // Parser is the root element for dictionaries and supports multiple XML

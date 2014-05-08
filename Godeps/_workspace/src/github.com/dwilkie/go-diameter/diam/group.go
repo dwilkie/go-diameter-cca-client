@@ -8,8 +8,8 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/fiorix/go-diameter/diam/datatypes"
-	"github.com/fiorix/go-diameter/diam/dict"
+	"github.com/dwilkie/go-diameter/diam/datatypes"
+	"github.com/dwilkie/go-diameter/diam/dict"
 )
 
 const GroupedType = 50 // Must not conflict with other datatypes.DataTypeId.

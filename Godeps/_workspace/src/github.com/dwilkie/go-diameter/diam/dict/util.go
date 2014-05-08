@@ -9,7 +9,7 @@ package dict
 import (
 	"fmt"
 
-	"github.com/fiorix/go-diameter/diam/datatypes"
+	"github.com/dwilkie/go-diameter/diam/datatypes"
 )
 
 // Apps return a list of all applications loaded in the Parser instance.

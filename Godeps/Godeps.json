@@ -3,9 +3,9 @@
 	"GoVersion": "go1.2.1",
 	"Deps": [
 		{
-			"ImportPath": "github.com/fiorix/go-diameter/diam",
-			"Comment": "v2.0.1-2-g30e433b",
-			"Rev": "30e433bb297070052ce7ed235b963fd0aa8e5d2f"
+			"ImportPath": "github.com/dwilkie/go-diameter/diam",
+			"Comment": "v2.0.1-12-gb9de59f",
+			"Rev": "b9de59ff6a0ee2cdd072dad916dafcc15a7abb65"
 		}
 	]
 }

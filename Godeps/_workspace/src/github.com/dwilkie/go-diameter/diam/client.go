@@ -11,7 +11,7 @@ import (
 	"crypto/tls"
 	"net"
 
-	"github.com/fiorix/go-diameter/diam/dict"
+	"github.com/dwilkie/go-diameter/diam/dict"
 )
 
 // Dial connects to the peer pointed to by addr and returns the Conn that

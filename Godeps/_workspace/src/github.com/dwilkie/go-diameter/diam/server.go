@@ -16,7 +16,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/fiorix/go-diameter/diam/dict"
+	"github.com/dwilkie/go-diameter/diam/dict"
 )
 
 // Objects implementing the Handler interface can be

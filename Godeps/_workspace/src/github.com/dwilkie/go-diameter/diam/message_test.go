@@ -12,8 +12,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/fiorix/go-diameter/diam/datatypes"
-	"github.com/fiorix/go-diameter/diam/dict"
+	"github.com/dwilkie/go-diameter/diam/datatypes"
+	"github.com/dwilkie/go-diameter/diam/dict"
 )
 
 var testOnce sync.Once

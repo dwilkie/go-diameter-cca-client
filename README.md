@@ -21,6 +21,37 @@ go get
 forego start
 ```
 
+### Update the dependencies
+
+```
+godep update github.com/dwilkie/go-diameter/diam
+```
+
+### Restore the dependencies back to upstream branch
+
+Edit `client.go` and replace
+
+```
+"github.com/dwilkie/go-diameter/diam"
+"github.com/dwilkie/go-diameter/diam/datatypes"
+```
+
+with
+
+```
+"github.com/fiorix/go-diameter/diam"
+"github.com/fiorix/go-diameter/diam/datatypes"
+```
+
+Then run:
+
+```
+go get -u github.com/fiorix/go-diameter-cca-client
+godep restore
+godep update github.com/fiorix/go-diameter/diam
+```
+
+
 ## Resources
 
 * [Installing Go](http://blog.labix.org/2013/06/15/in-flight-deb-packages-of-go)

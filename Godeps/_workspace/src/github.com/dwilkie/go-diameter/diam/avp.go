@@ -9,8 +9,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/fiorix/go-diameter/diam/datatypes"
-	"github.com/fiorix/go-diameter/diam/dict"
+	"github.com/dwilkie/go-diameter/diam/datatypes"
+	"github.com/dwilkie/go-diameter/diam/dict"
 )
 
 // Diameter AVP.

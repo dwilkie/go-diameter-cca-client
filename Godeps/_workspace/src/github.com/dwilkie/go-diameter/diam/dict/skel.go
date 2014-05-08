@@ -9,7 +9,7 @@ package dict
 import (
 	"encoding/xml"
 
-	"github.com/fiorix/go-diameter/diam/datatypes"
+	"github.com/dwilkie/go-diameter/diam/datatypes"
 )
 
 // File is the dictionary root element of a XML file.  See diam_base.xml.
