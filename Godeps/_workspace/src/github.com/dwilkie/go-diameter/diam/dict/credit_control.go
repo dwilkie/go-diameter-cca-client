@@ -83,35 +83,6 @@ var CreditControlXML = []byte(`<?xml version="1.0" encoding="UTF-8"?>
       </answer>
     </command>
 
-
-    <!-- Copied from base.xml -->
-
-    <avp name="Result-Code" code="268" must="M" may="P" must-not="V" may-encrypt="-">
-      <data type="Unsigned32"/>
-    </avp>
-
-    <avp name="Session-Id" code="263" must="M" may="P" must-not="V" may-encrypt="Y">
-      <data type="UTF8String"/>
-    </avp>
-
-    <avp name="Origin-Host" code="264" must="M" may="P" must-not="V" may-encrypt="-">
-      <data type="DiameterIdentity"/>
-    </avp>
-
-    <avp name="Origin-Realm" code="296" must="M" may="P" must-not="V" may-encrypt="-">
-      <data type="DiameterIdentity"/>
-    </avp>
-
-    <avp name="Destination-Realm" code="283" must="M" may="P" must-not="V" may-encrypt="-">
-      <data type="DiameterIdentity"/>
-    </avp>
-
-    <avp name="Auth-Application-Id" code="258" must="M" may="P" must-not="V" may-encrypt="-">
-      <data type="Unsigned32"/>
-    </avp>
-
-    <!-- Credit Control App AVPS -->
-
     <avp name="CC-Correlation-Id" code="411" must="-" may="P,M" must-not="V" may-encrypt="Y">
       <data type="OctetString"/>
     </avp>

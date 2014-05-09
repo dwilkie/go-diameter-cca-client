@@ -4,8 +4,8 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/dwilkie/go-diameter/diam",
-			"Comment": "v2.0.1-13-g11f0cf8",
-			"Rev": "11f0cf801b01807c5552c57fb854e8ff5569b822"
+			"Comment": "v2.0.1-14-g70a4f2f",
+			"Rev": "70a4f2f650164b109a0ca5440ca0e2b86aa899c3"
 		}
 	]
 }
