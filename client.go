@@ -73,7 +73,7 @@ func NewClient(c diam.Conn) {
   parser.Load(bytes.NewReader(dict.CreditControlXML))
 
   // the following accepts a Parser object
-  m := diam.NewRequest(272, 0, parser)
+  m := diam.NewRequest(272, 4, parser)
   // Add AVPs
   m.NewAVP("Session-Id", 0x40, 0x00, SessionId)
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
@@ -95,8 +95,16 @@ func NewClient(c diam.Conn) {
     },
   })
 
+//  log.Printf("ApplicationId: %s", m.Header.ApplicationId)
+//  log.Printf("CommandCode: %s", m.Header.CommandCode)
+
+//  dictCMD, err := m.Dictionary.FindCMD(
+//    m.Header.ApplicationId,
+//    m.Header.CommandCode,
+//  );
+
   log.Printf("Sending message to %s", c.RemoteAddr().String())
-  log.Println(m)
+  log.Println(m.String())
   // Send message to the connection
   if _, err := m.WriteTo(c); err != nil {
     log.Fatal("Write failed:", err)
