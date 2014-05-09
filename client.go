@@ -72,15 +72,28 @@ func NewClient(c diam.Conn) {
   parser.Load(bytes.NewReader(dict.DefaultXML))
   parser.Load(bytes.NewReader(dict.CreditControlXML))
 
-  // the following accepts a Parser object
-  m := diam.NewRequest(272, 4, parser)
+  m := diam.NewRequest(257, 0, parser)
   // Add AVPs
-  m.NewAVP("Session-Id", 0x40, 0x00, SessionId)
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
   m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
   laddr := c.LocalAddr()
   ip, _, _ := net.SplitHostPort(laddr.String())
-  log.Printf("Host-IP-Address %s", ip)
+  m.NewAVP("Host-IP-Address", 0x40, 0x0, datatypes.Address(net.ParseIP(ip)))
+  m.NewAVP("Vendor-Id", 0x40, 0x0, VendorId)
+  m.NewAVP("Product-Name", 0x40, 0x0, ProductName)
+
+  log.Printf("Sending message to %s", c.RemoteAddr().String())
+  log.Println(m.String())
+  // Send message to the connection
+  if _, err := m.WriteTo(c); err != nil {
+    log.Fatal("Write failed:", err)
+  }
+
+  m = diam.NewRequest(272, 4, parser)
+  // Add AVPs
+  m.NewAVP("Session-Id", 0x40, 0x00, SessionId)
+  m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
+  m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
   m.NewAVP("Auth-Application-Id", 0x40, 0x0, AuthApplicationId)
   m.NewAVP("CC-Request-Type", 0x40, 0x0, CCRequestType)
   m.NewAVP("Service-Context-Id", 0x40, 0x0, ServiceContextId)
