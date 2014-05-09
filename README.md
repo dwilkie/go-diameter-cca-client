@@ -78,6 +78,8 @@ SERVER_ADDRESS=192.168.3.20:3868 go-diameter-cca-client
 
 ### Inspecting Packets with Wireshark
 
+Note you'll only be able to see the response packets because the request packets are encrypted through the VPN tunnel. But you can see the request from the client after it builds the AVPs.
+
 On the server:
 
 ```
