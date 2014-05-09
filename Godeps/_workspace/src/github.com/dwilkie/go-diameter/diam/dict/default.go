@@ -306,6 +306,14 @@ var DefaultXML = []byte(`<?xml version="1.0" encoding="UTF-8"?>
       </data>
     </avp>
 
+    <avp name="CC-Request-Type" code="416" must="M" may="P" must-not="V" may-encrypt="Y">
+      <data type="Enumerated">
+        <item code="1" name="INITIAL_REQUEST"/>
+        <item code="2" name="UPDATE_REQUEST"/>
+        <item code="3" name="TERMINATION_REQUEST"/>
+      </data>
+    </avp>
+
     <avp name="Class" code="25" must="M" may="P" must-not="V" may-encrypt="Y">
       <data type="OctetString"/>
     </avp>

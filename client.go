@@ -32,6 +32,7 @@ const (
   RequestedAction = datatypes.Enumerated(0x00)
   SubscriptionIdType = datatypes.Enumerated(0x00) // E164
   SubscriptionIdData = datatypes.UTF8String("85512239136")
+  SessionId = datatypes.UTF8String("session-id")
 )
 
 func main() {
@@ -74,15 +75,15 @@ func NewClient(c diam.Conn) {
   // the following accepts a Parser object
   m := diam.NewRequest(272, 0, parser)
   // Add AVPs
+  m.NewAVP("Session-Id", 0x40, 0x00, SessionId)
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
   m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
   laddr := c.LocalAddr()
   ip, _, _ := net.SplitHostPort(laddr.String())
-  m.NewAVP("Host-IP-Address", 0x40, 0x0, datatypes.Address(net.ParseIP(ip)))
-  m.NewAVP("Vendor-Id", 0x40, 0x0, VendorId)
+  log.Printf("Host-IP-Address %s", ip)
   m.NewAVP("Auth-Application-Id", 0x40, 0x0, AuthApplicationId)
-  m.NewAVP("Service-Context-Id", 0x40, 0x0, ServiceContextId)
   m.NewAVP("CC-Request-Type", 0x40, 0x0, CCRequestType)
+  m.NewAVP("Service-Context-Id", 0x40, 0x0, ServiceContextId)
   m.NewAVP("CC-Request-Number", 0x40, 0x0, CCRequestNumber)
   m.NewAVP("Requested-Action", 0x40, 0x0, RequestedAction)
   m.NewAVP("Subscription-Id", 0x40, 0x00, &diam.Grouped{
