@@ -10,7 +10,7 @@ Use [forego](https://github.com/ddollar/forego) for development.
 
 ```
 cd src/github.com/fiorix/go-diameter/examples/server
-go run server
+go run server.go
 ```
 
 ### Run the client
@@ -73,8 +73,26 @@ go get -u github.com/dwilkie/go-diameter-cca-client
 ### Testing Live Connection
 
 ```
-SERVER_ADDRESS=host:port go-diameter-cca-client
+SERVER_ADDRESS=192.168.3.20:3868 go-diameter-cca-client
 ```
+
+### Inspecting Packets with Wireshark
+
+On the server:
+
+```
+tcpdump -i eth0 -nnvvS host 192.168.3.20 -w beeline_diameter.cap
+````
+
+On your local machine:
+
+```
+sftp -i ~/.ssh/aws/dwilkie.pem ubuntu@nuntium.chibitxt.me:beeline_diameter.cap .
+```
+
+Then open `beeline_diameter.cap` with Wireshark and inspect the response.
+
+### Foreman
 
 See also [forego#20](https://github.com/ddollar/forego/issues/20)
 
