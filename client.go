@@ -13,10 +13,11 @@ import (
   "net"
   "os"
   "time"
+  "bytes"
 
   "github.com/dwilkie/go-diameter/diam"
   "github.com/dwilkie/go-diameter/diam/datatypes"
-  //"github.com/dwilkie/go-diameter/diam/dict"
+  "github.com/dwilkie/go-diameter/diam/dict"
 )
 
 const (
@@ -66,8 +67,12 @@ func main() {
 func NewClient(c diam.Conn) {
   // Build CCR
 
-  //dictionary := dict.CreditControl
-  m := diam.NewRequest(272, 0, nil)
+  parser, _ := dict.NewParser()
+  parser.Load(bytes.NewReader(dict.DefaultXML))
+  parser.Load(bytes.NewReader(dict.CreditControlXML))
+
+  // the following accepts a Parser object
+  m := diam.NewRequest(272, 0, parser)
   // Add AVPs
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
   m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
