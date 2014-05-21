@@ -34,14 +34,16 @@ Edit `client.go` and replace
 
 ```
 "github.com/dwilkie/go-diameter/diam"
-"github.com/dwilkie/go-diameter/diam/datatypes"
+"github.com/dwilkie/go-diameter/diam/diamtype"
+"github.com/dwilkie/go-diameter/diam/diamdict"
 ```
 
 with
 
 ```
 "github.com/fiorix/go-diameter/diam"
-"github.com/fiorix/go-diameter/diam/datatypes"
+"github.com/fiorix/go-diameter/diam/diamtype"
+"github.com/fiorix/go-diameter/diam/diamdict"
 ```
 
 Then run:
@@ -51,14 +53,14 @@ go get -u github.com/fiorix/go-diameter/diam
 godep save
 ```
 
+### Checking the build
 
-## Resources
+Push your changes then run:
 
-* [Installing Go](http://blog.labix.org/2013/06/15/in-flight-deb-packages-of-go)
-* [Getting Started with Go on Heroku](http://mmcgrana.github.io/2012/09/getting-started-with-go-on-heroku.html)
-* [Diameter Credit-Control Application RFC] (http://tools.ietf.org/html/rfc4006)
-* [go-diameter](https://github.com/fiorix/go-diameter)
-* [go-redis](https://github.com/fiorix/go-redis)
+```
+cd go
+go get -u github.com/dwilkie/go-diameter-cca-client
+```
 
 ## Deployment
 
@@ -98,3 +100,11 @@ Then open `beeline_diameter.cap` with Wireshark and inspect the response.
 See also [forego#20](https://github.com/ddollar/forego/issues/20)
 
 We might be able to create something similar to what [foreman](https://github.com/ddollar/foreman/blob/master/lib/foreman/export/upstart.rb) does
+
+## Resources
+
+* [Installing Go](http://blog.labix.org/2013/06/15/in-flight-deb-packages-of-go)
+* [Getting Started with Go on Heroku](http://mmcgrana.github.io/2012/09/getting-started-with-go-on-heroku.html)
+* [Diameter Credit-Control Application RFC] (http://tools.ietf.org/html/rfc4006)
+* [go-diameter](https://github.com/fiorix/go-diameter)
+* [go-redis](https://github.com/fiorix/go-redis)
