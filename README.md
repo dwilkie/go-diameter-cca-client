@@ -24,8 +24,8 @@ forego start
 ### Update the dependencies
 
 ```
-go get -u github.com/dwilkie/go-diameter/diam
-godep update github.com/dwilkie/go-diameter/diam
+go get -u github.com/fiorix/go-diameter/diam
+godep update github.com/fiorix/go-diameter/diam
 ```
 
 ### Restore the dependencies back to upstream branch
