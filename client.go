@@ -17,6 +17,7 @@ import (
 
   "github.com/fiorix/go-diameter/diam"
   "github.com/fiorix/go-diameter/diam/diamtype"
+  "github.com/fiorix/go-diameter/diam/diamdict"
 )
 
 const (
@@ -67,9 +68,9 @@ func main() {
 func NewClient(c diam.Conn) {
   // Build CCR
 
-  parser, _ := dict.NewParser()
-  parser.Load(bytes.NewReader(dict.DefaultXML))
-  parser.Load(bytes.NewReader(dict.CreditControlXML))
+  parser, _ := diamdict.NewParser()
+  parser.Load(bytes.NewReader(diamdict.DefaultXML))
+  parser.Load(bytes.NewReader(diamdict.CreditControlXML))
 
   m := diam.NewRequest(257, 0, parser)
   // Add AVPs
