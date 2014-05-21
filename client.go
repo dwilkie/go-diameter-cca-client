@@ -20,18 +20,18 @@ import (
 )
 
 const (
-  Identity    = datatypes.DiameterIdentity("client")
-  Realm       = datatypes.DiameterIdentity("localhost")
-  VendorId    = datatypes.Unsigned32(13)
-  ProductName = datatypes.UTF8String("go-diameter")
-  AuthApplicationId = datatypes.Unsigned32(4)
-  ServiceContextId = datatypes.UTF8String("chibi@chibitxt.me")
-  CCRequestType = datatypes.Enumerated(0x01)
-  CCRequestNumber = datatypes.Unsigned32(0)
-  RequestedAction = datatypes.Enumerated(0x00)
-  SubscriptionIdType = datatypes.Enumerated(0x00) // E164
-  SubscriptionIdData = datatypes.UTF8String("85512239136")
-  SessionId = datatypes.UTF8String("session-id")
+  Identity    = diamtype.DiameterIdentity("client")
+  Realm       = diamtype.DiameterIdentity("localhost")
+  VendorId    = diamtype.Unsigned32(13)
+  ProductName = diamtype.UTF8String("go-diameter")
+  AuthApplicationId = diamtype.Unsigned32(4)
+  ServiceContextId = diamtype.UTF8String("chibi@chibitxt.me")
+  CCRequestType = diamtype.Enumerated(0x01)
+  CCRequestNumber = diamtype.Unsigned32(0)
+  RequestedAction = diamtype.Enumerated(0x00)
+  SubscriptionIdType = diamtype.Enumerated(0x00) // E164
+  SubscriptionIdData = diamtype.UTF8String("85512239136")
+  SessionId = diamtype.UTF8String("session-id")
 )
 
 func main() {
@@ -77,7 +77,7 @@ func NewClient(c diam.Conn) {
   m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
   laddr := c.LocalAddr()
   ip, _, _ := net.SplitHostPort(laddr.String())
-  m.NewAVP("Host-IP-Address", 0x40, 0x0, datatypes.Address(net.ParseIP(ip)))
+  m.NewAVP("Host-IP-Address", 0x40, 0x0, diamtype.Address(net.ParseIP(ip)))
   m.NewAVP("Vendor-Id", 0x40, 0x0, VendorId)
   m.NewAVP("Product-Name", 0x40, 0x0, ProductName)
 
@@ -127,7 +127,7 @@ func NewClient(c diam.Conn) {
     m = diam.NewRequest(280, 0, nil)
     m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
     m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
-    m.NewAVP("Origin-State-Id", 0x40, 0x00, datatypes.Unsigned32(rand.Uint32()))
+    m.NewAVP("Origin-State-Id", 0x40, 0x00, diamtype.Unsigned32(rand.Uint32()))
     log.Printf("Sending message to %s", c.RemoteAddr().String())
     log.Println(m)
     if _, err := m.WriteTo(c); err != nil {
