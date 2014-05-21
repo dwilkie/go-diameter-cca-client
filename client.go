@@ -15,9 +15,8 @@ import (
   "time"
   "bytes"
 
-  "github.com/dwilkie/go-diameter/diam"
-  "github.com/dwilkie/go-diameter/diam/datatypes"
-  "github.com/dwilkie/go-diameter/diam/dict"
+  "github.com/fiorix/go-diameter/diam"
+  "github.com/fiorix/go-diameter/diam/diamtype"
 )
 
 const (

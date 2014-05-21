@@ -47,9 +47,8 @@ with
 Then run:
 
 ```
-go get -u github.com/fiorix/go-diameter-cca-client
-godep restore
-godep update github.com/fiorix/go-diameter/diam
+go get -u github.com/fiorix/go-diameter/diam
+godep save
 ```
 
 
