@@ -35,7 +35,7 @@ const (
   SubscriptionIdType = diamtype.Enumerated(0x00) // E164
   SubscriptionIdData = diamtype.UTF8String("85560201158")
   ServiceParameterType = diamtype.Unsigned32(1)
-  ServiceParameterValue = diamtype.OctetString("400")
+  ServiceParameterValue = diamtype.OctetString("200")
   ServiceIdentifier = diamtype.Unsigned32(0)
 )
 
