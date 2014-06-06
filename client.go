@@ -34,9 +34,11 @@ const (
   RequestedAction = diamtype.Enumerated(0x00)
   SubscriptionIdType = diamtype.Enumerated(0x00) // E164
   SubscriptionIdData = diamtype.UTF8String("85560201158")
-  ServiceParameterType = diamtype.Unsigned32(1)
-  ServiceParameterValue = diamtype.OctetString("200")
   ServiceIdentifier = diamtype.Unsigned32(0)
+  ServiceParameterType1 = diamtype.Unsigned32(1)
+  ServiceParameterValue1 = diamtype.OctetString("302")
+  ServiceParameterType2 = diamtype.Unsigned32(2)
+  ServiceParameterValue2 = diamtype.OctetString("30201")
 )
 
 func main() {
@@ -118,12 +120,19 @@ func NewClient(c diam.Conn) {
   m.NewAVP("Service-Parameter-Info", 0x40, 0x00, &diam.Grouped{
     AVP: []*diam.AVP{
       // Service-Parameter-Type
-      diam.NewAVP(441, 0x40, 0x0, ServiceParameterType),
+      diam.NewAVP(441, 0x40, 0x0, ServiceParameterType1),
       // Service-Parameter-Value
-      diam.NewAVP(442, 0x40, 0x0, ServiceParameterValue),
+      diam.NewAVP(442, 0x40, 0x0, ServiceParameterValue1),
     },
   })
-
+  m.NewAVP("Service-Parameter-Info", 0x40, 0x00, &diam.Grouped{
+    AVP: []*diam.AVP{
+      // Service-Parameter-Type
+      diam.NewAVP(441, 0x40, 0x0, ServiceParameterType2),
+      // Service-Parameter-Value
+      diam.NewAVP(442, 0x40, 0x0, ServiceParameterValue2),
+    },
+  })
 
 //  log.Printf("ApplicationId: %s", m.Header.ApplicationId)
 //  log.Printf("CommandCode: %s", m.Header.CommandCode)
