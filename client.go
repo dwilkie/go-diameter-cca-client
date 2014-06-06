@@ -33,7 +33,7 @@ const (
   CCRequestNumber = diamtype.Unsigned32(0)
   RequestedAction = diamtype.Enumerated(0x00)
   SubscriptionIdType = diamtype.Enumerated(0x00) // E164
-  SubscriptionIdData = diamtype.UTF8String("85560201158")
+  SubscriptionIdData = diamtype.UTF8String("85589481811")
   ServiceIdentifier = diamtype.Unsigned32(0)
   ServiceParameterType1 = diamtype.Unsigned32(1)
   ServiceParameterValue1 = diamtype.OctetString("302")
