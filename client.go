@@ -27,7 +27,7 @@ const (
   ProductName = diamtype.UTF8String("Chibi")
   AuthApplicationId = diamtype.Unsigned32(4)
   ServiceContextId = diamtype.UTF8String("CMVT-SVC@comverse.com")
-  CCRequestType = diamtype.Enumerated(0x01)
+  CCRequestType = diamtype.Enumerated(0x04)
   CCRequestNumber = diamtype.Unsigned32(0)
   RequestedAction = diamtype.Enumerated(0x00)
   SubscriptionIdType = diamtype.Enumerated(0x00) // E164
@@ -111,12 +111,12 @@ func NewClient(c diam.Conn) {
       diam.NewAVP(444, 0x40, 0x0, SubscriptionIdData),
     },
   })
-  m.NewAVP("Service-Parameter-Info", 0x00, 0x00, &diam.Grouped{
+  m.NewAVP("Service-Parameter-Info", 0x40, 0x00, &diam.Grouped{
     AVP: []*diam.AVP{
-      // Subscription-Id-Type
-      diam.NewAVP(441, 0x00, 0x0, ServiceParameterType),
-      // Subscription-Id-Data
-      diam.NewAVP(442, 0x00, 0x0, ServiceParameterValue),
+      // Service-Parameter-Type
+      diam.NewAVP(441, 0x40, 0x0, ServiceParameterType),
+      // Service-Parameter-Value
+      diam.NewAVP(442, 0x40, 0x0, ServiceParameterValue),
     },
   })
 
