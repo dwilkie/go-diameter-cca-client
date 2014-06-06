@@ -25,7 +25,7 @@ const (
   Realm       = diamtype.DiameterIdentity("teletech.com")
   VendorId    = diamtype.Unsigned32(0)
   StateId     = diamtype.Unsigned32(0)
-  ProductName = diamtype.UTF8String("Chibi")
+  ProductName = diamtype.UTF8String("teletech.com")
   AuthApplicationId = diamtype.Unsigned32(4)
   ServiceContextId = diamtype.UTF8String("chibi@chibitxt.me")
   CCRequestType = diamtype.Enumerated(0x01)
