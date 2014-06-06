@@ -114,9 +114,9 @@ func NewClient(c diam.Conn) {
   m.NewAVP("Service-Parameter-Info", 0x00, 0x00, &diam.Grouped{
     AVP: []*diam.AVP{
       // Subscription-Id-Type
-      diam.NewAVP("Service-Parameter-Type", 0x00, 0x0, ServiceParameterType),
+      diam.NewAVP(441, 0x00, 0x0, ServiceParameterType),
       // Subscription-Id-Data
-      diam.NewAVP("Service-Parameter-Value", 0x00, 0x0, ServiceParameterValue),
+      diam.NewAVP(442, 0x00, 0x0, ServiceParameterValue),
     },
   })
 
