@@ -24,6 +24,7 @@ const (
   Identity    = diamtype.DiameterIdentity("teletech1.client.com")
   Realm       = diamtype.DiameterIdentity("teletech.com")
   VendorId    = diamtype.Unsigned32(0)
+  StateId     = diamtype.Unsigned32(0)
   ProductName = diamtype.UTF8String("teletech.com")
   AuthApplicationId = diamtype.Unsigned32(4)
   ServiceContextId = diamtype.UTF8String("chibi@chibitxt.me")
@@ -76,6 +77,7 @@ func NewClient(c diam.Conn) {
   // Add AVPs
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
   m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
+  m.NewAVP("Origin-State-Id", 0x40, 0x00, StateId)
   laddr := c.LocalAddr()
   ip, _, _ := net.SplitHostPort(laddr.String())
   m.NewAVP("Host-IP-Address", 0x40, 0x0, diamtype.Address(net.ParseIP(ip)))
