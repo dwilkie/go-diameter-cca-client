@@ -14,6 +14,7 @@ import (
   "os"
   "time"
   "bytes"
+  "fmt"
 
   "github.com/fiorix/go-diameter/diam"
   "github.com/fiorix/go-diameter/diam/diamtype"
@@ -33,7 +34,6 @@ const (
   RequestedAction = diamtype.Enumerated(0x00)
   SubscriptionIdType = diamtype.Enumerated(0x00) // E164
   SubscriptionIdData = diamtype.UTF8String("85560201158")
-  SessionId = diamtype.UTF8String("session-id")
   ServiceParameterType = diamtype.Unsigned32(1)
   ServiceParameterValue = diamtype.OctetString("400")
 )
@@ -96,7 +96,7 @@ func NewClient(c diam.Conn) {
 
   m = diam.NewRequest(272, 4, parser)
   // Add AVPs
-  m.NewAVP("Session-Id", 0x40, 0x00, SessionId)
+  m.NewAVP("Session-Id", 0x40, 0x00, diamtype.UTF8String(fmt.Sprintf("%v", rand.Uint32())))
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
   m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
   m.NewAVP("Destination-Realm", 0x40, 0x00, DestinationRealm)
