@@ -36,6 +36,7 @@ const (
   SubscriptionIdData = diamtype.UTF8String("85560201158")
   ServiceParameterType = diamtype.Unsigned32(1)
   ServiceParameterValue = diamtype.OctetString("400")
+  ServiceIdentifier = diamtype.Unsigned32(0)
 )
 
 func main() {
@@ -103,6 +104,7 @@ func NewClient(c diam.Conn) {
   m.NewAVP("Auth-Application-Id", 0x40, 0x0, AuthApplicationId)
   m.NewAVP("CC-Request-Type", 0x40, 0x0, CCRequestType)
   m.NewAVP("Service-Context-Id", 0x40, 0x0, ServiceContextId)
+  m.NewAVP("Service-Identifier", 0x40, 0x0, ServiceIdentifier)
   m.NewAVP("CC-Request-Number", 0x40, 0x0, CCRequestNumber)
   m.NewAVP("Requested-Action", 0x40, 0x0, RequestedAction)
   m.NewAVP("Subscription-Id", 0x40, 0x00, &diam.Grouped{
