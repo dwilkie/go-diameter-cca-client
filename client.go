@@ -24,16 +24,17 @@ const (
   Identity    = diamtype.DiameterIdentity("teletech1.client.com")
   Realm       = diamtype.DiameterIdentity("teletech.com")
   VendorId    = diamtype.Unsigned32(0)
-  StateId     = diamtype.Unsigned32(0)
   ProductName = diamtype.UTF8String("Chibi")
   AuthApplicationId = diamtype.Unsigned32(4)
-  ServiceContextId = diamtype.UTF8String("chibi@chibitxt.me")
+  ServiceContextId = diamtype.UTF8String("CMVT-SVC@comverse.com")
   CCRequestType = diamtype.Enumerated(0x01)
   CCRequestNumber = diamtype.Unsigned32(0)
   RequestedAction = diamtype.Enumerated(0x00)
   SubscriptionIdType = diamtype.Enumerated(0x00) // E164
   SubscriptionIdData = diamtype.UTF8String("85560201158")
   SessionId = diamtype.UTF8String("session-id")
+  ServiceParameterType = diamtype.Unsigned32(1)
+  ServiceParameterValue = diamtype.OctetString("400")
 )
 
 func main() {
@@ -77,7 +78,7 @@ func NewClient(c diam.Conn) {
   // Add AVPs
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
   m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
-  m.NewAVP("Origin-State-Id", 0x40, 0x00, StateId)
+  m.NewAVP("Origin-State-Id", 0x40, 0x00, diamtype.Unsigned32(rand.Uint32()))
   m.NewAVP("Auth-Application-Id", 0x40, 0x00, AuthApplicationId)
   laddr := c.LocalAddr()
   ip, _, _ := net.SplitHostPort(laddr.String())
@@ -110,6 +111,15 @@ func NewClient(c diam.Conn) {
       diam.NewAVP(444, 0x40, 0x0, SubscriptionIdData),
     },
   })
+  m.NewAVP("Service-Parameter-Info", 0x00, 0x00, &diam.Grouped{
+    AVP: []*diam.AVP{
+      // Subscription-Id-Type
+      diam.NewAVP("Service-Parameter-Type", 0x00, 0x0, ServiceParameterType),
+      // Subscription-Id-Data
+      diam.NewAVP("Service-Parameter-Value", 0x00, 0x0, ServiceParameterValue),
+    },
+  })
+
 
 //  log.Printf("ApplicationId: %s", m.Header.ApplicationId)
 //  log.Printf("CommandCode: %s", m.Header.CommandCode)
