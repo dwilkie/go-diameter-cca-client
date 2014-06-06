@@ -23,6 +23,7 @@ import (
 const (
   Identity    = diamtype.DiameterIdentity("teletech1.client.com")
   Realm       = diamtype.DiameterIdentity("teletech.com")
+  DestinationRealm = diamtype.DiameterIdentity("comverse.com")
   VendorId    = diamtype.Unsigned32(0)
   ProductName = diamtype.UTF8String("Chibi")
   AuthApplicationId = diamtype.Unsigned32(4)
@@ -98,6 +99,7 @@ func NewClient(c diam.Conn) {
   m.NewAVP("Session-Id", 0x40, 0x00, SessionId)
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
   m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
+  m.NewAVP("Destination-Realm", 0x40, 0x00, DestinationRealm)
   m.NewAVP("Auth-Application-Id", 0x40, 0x0, AuthApplicationId)
   m.NewAVP("CC-Request-Type", 0x40, 0x0, CCRequestType)
   m.NewAVP("Service-Context-Id", 0x40, 0x0, ServiceContextId)
