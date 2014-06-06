@@ -83,7 +83,7 @@ func NewClient(c diam.Conn) {
   ip, _, _ := net.SplitHostPort(laddr.String())
   m.NewAVP("Host-IP-Address", 0x40, 0x0, diamtype.Address(net.ParseIP(ip)))
   m.NewAVP("Vendor-Id", 0x40, 0x0, VendorId)
-  m.NewAVP("Product-Name", 0x40, 0x0, ProductName)
+  m.NewAVP("Product-Name", 0x00, 0x0, ProductName)
 
   log.Printf("Sending message to %s", c.RemoteAddr().String())
   log.Println(m.String())
