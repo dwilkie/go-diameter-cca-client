@@ -118,3 +118,4 @@ Here the flag is `0x40` which is `64` in decimal or `1000000` in binary. Accordi
 * [Diameter Credit-Control Application RFC] (http://tools.ietf.org/html/rfc4006)
 * [go-diameter](https://github.com/fiorix/go-diameter)
 * [go-redis](https://github.com/fiorix/go-redis)
+* [go-worker](http://www.goworker.org/)
