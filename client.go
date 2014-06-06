@@ -43,6 +43,9 @@ const (
 
 func main() {
   ssl := flag.Bool("ssl", false, "connect using SSL/TLS")
+  parser, _ := diamdict.NewParser()
+  parser.Load(bytes.NewReader(diamdict.DefaultXML))
+  parser.Load(bytes.NewReader(diamdict.CreditControlXML))
   flag.Parse()
   // ALL incoming messages are handled here.
   diam.HandleFunc("ALL", func(c diam.Conn, m *diam.Message) {
@@ -59,7 +62,7 @@ func main() {
   if *ssl {
     c, err = diam.DialTLS(addr, "", "", nil, nil)
   } else {
-    c, err = diam.Dial(addr, nil, nil)
+    c, err = diam.Dial(addr, nil, parser)
   }
   if err != nil {
     log.Fatal(err)
