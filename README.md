@@ -101,6 +101,16 @@ See also [forego#20](https://github.com/ddollar/forego/issues/20)
 
 We might be able to create something similar to what [foreman](https://github.com/ddollar/foreman/blob/master/lib/foreman/export/upstart.rb) does
 
+## Flags
+
+When creating a new AVP in the client you set the flags like this:
+
+```go
+m.NewAVP("Vendor-Id", 0x40, 0x0, VendorId)
+```
+
+Here the flag is `0x40` which is `64` in decimal or `1000000` in binary. According to [this article](http://diameter-protocol.blogspot.com/2011/05/daimeter-avp-structure.html) the first bit is for the Manditory Flag. Therefore to toggle between Manditory ON and Manditory OFF change `0x40` to `0x00`
+
 ## Resources
 
 * [Installing Go](http://blog.labix.org/2013/06/15/in-flight-deb-packages-of-go)
