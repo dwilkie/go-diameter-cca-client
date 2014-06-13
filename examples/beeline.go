@@ -10,9 +10,7 @@ import (
   "flag"
   "log"
   "math/rand"
-  "net"
   "os"
-  "time"
   "bytes"
   "fmt"
 
@@ -52,7 +50,6 @@ func main() {
   diam.HandleFunc("CCA", func(c diam.Conn, m *diam.Message) {
     result_code_avp, err := m.FindAVP(268)
     result_code_data = result_code_avp.Data.String()
-    log.Printf(result_code_data)
     if err != nil {
       log.Fatal(err)
     }
@@ -91,26 +88,7 @@ func NewClient(c diam.Conn) {
   parser.Load(bytes.NewReader(diamdict.DefaultXML))
   parser.Load(bytes.NewReader(diamdict.CreditControlXML))
 
-  m := diam.NewRequest(257, 0, parser)
-  // Add AVPs
-  m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
-  m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
-  m.NewAVP("Origin-State-Id", 0x40, 0x00, diamtype.Unsigned32(rand.Uint32()))
-  m.NewAVP("Auth-Application-Id", 0x40, 0x00, AuthApplicationId)
-  laddr := c.LocalAddr()
-  ip, _, _ := net.SplitHostPort(laddr.String())
-  m.NewAVP("Host-IP-Address", 0x40, 0x0, diamtype.Address(net.ParseIP(ip)))
-  m.NewAVP("Vendor-Id", 0x40, 0x0, VendorId)
-  m.NewAVP("Product-Name", 0x00, 0x0, ProductName)
-
-  log.Printf("Sending message to %s", c.RemoteAddr().String())
-  log.Println(m.String())
-  // Send message to the connection
-  if _, err := m.WriteTo(c); err != nil {
-    log.Fatal("Write failed:", err)
-  }
-
-  m = diam.NewRequest(272, 4, parser)
+  m := diam.NewRequest(272, 4, parser)
   // Add AVPs
   m.NewAVP("Session-Id", 0x40, 0x00, diamtype.UTF8String(fmt.Sprintf("%v", rand.Uint32())))
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
@@ -147,31 +125,10 @@ func NewClient(c diam.Conn) {
     },
   })
 
-//  log.Printf("ApplicationId: %s", m.Header.ApplicationId)
-//  log.Printf("CommandCode: %s", m.Header.CommandCode)
-
-//  dictCMD, err := m.Dictionary.FindCMD(
-//    m.Header.ApplicationId,
-//    m.Header.CommandCode,
-//  );
-
   log.Printf("Sending message to %s", c.RemoteAddr().String())
   log.Println(m.String())
   // Send message to the connection
   if _, err := m.WriteTo(c); err != nil {
     log.Fatal("Write failed:", err)
-  }
-  // Send watchdog messages every 5 seconds
-  for {
-    time.Sleep(5 * time.Second)
-    m = diam.NewRequest(280, 0, nil)
-    m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
-    m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
-    m.NewAVP("Origin-State-Id", 0x40, 0x00, diamtype.Unsigned32(rand.Uint32()))
-    log.Printf("Sending message to %s", c.RemoteAddr().String())
-    log.Println(m)
-    if _, err := m.WriteTo(c); err != nil {
-      log.Fatal("Write failed:", err)
-    }
   }
 }
