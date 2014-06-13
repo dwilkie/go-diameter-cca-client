@@ -3,9 +3,33 @@
 	"GoVersion": "go1.2.1",
 	"Deps": [
 		{
+			"ImportPath": "code.google.com/p/vitess/go/pools",
+			"Comment": "weekly:weekly.2012-08-23.go.4fdf6aa4f602-740",
+			"Rev": "20aec5105bdc7ae2bc1f39deb44ec3fd5596716d"
+		},
+		{
+			"ImportPath": "code.google.com/p/vitess/go/sync2",
+			"Comment": "weekly:weekly.2012-08-23.go.4fdf6aa4f602-740",
+			"Rev": "20aec5105bdc7ae2bc1f39deb44ec3fd5596716d"
+		},
+		{
+			"ImportPath": "github.com/benmanns/goworker",
+			"Comment": "v0.1.0-14-ged77c6c",
+			"Rev": "ed77c6c17b88c15c0850b24236cac846b9179c26"
+		},
+		{
+			"ImportPath": "github.com/cihub/seelog",
+			"Comment": "go1.1-24-g83d0dca",
+			"Rev": "83d0dcad636b63c066856045962befa246e00c79"
+		},
+		{
 			"ImportPath": "github.com/fiorix/go-diameter/diam",
 			"Comment": "v2.0.2-5-g7fb410f",
 			"Rev": "7fb410f595d0e5f102ee1bc76dd48c830cad32c5"
+		},
+		{
+			"ImportPath": "github.com/garyburd/redigo/redis",
+			"Rev": "1c7841955920910958c71b1cc1a03f628267d468"
 		}
 	]
 }
