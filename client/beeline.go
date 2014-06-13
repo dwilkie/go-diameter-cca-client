@@ -37,19 +37,27 @@ const (
   ServerAddress = "192.168.3.20:3868"
 )
 
-func Charge(msisdn string) string {
+func Charge(transaction_id string, msisdn string) (session_id string, result_code string) {
   parser, _ := diamdict.NewParser()
   parser.Load(bytes.NewReader(diamdict.DefaultXML))
   parser.Load(bytes.NewReader(diamdict.CreditControlXML))
   // CCA incoming messages are handled here.
-  var result_code_data string
+
   diam.HandleFunc("CCA", func(c diam.Conn, m *diam.Message) {
+    session_id_avp, err := m.FindAVP(263)
+    if err != nil {
+      log.Fatal(err)
+    } else {
+      session_id = session_id_avp.Data.String()
+    }
+
     result_code_avp, err := m.FindAVP(268)
     if err != nil {
       log.Fatal(err)
     } else {
-      result_code_data = result_code_avp.Data.String()
+      result_code = result_code_avp.Data.String()
     }
+
     c.Close()
   })
   // Connect using the default handler and base.Dict.
@@ -66,7 +74,7 @@ func Charge(msisdn string) string {
   // Wait until the server kick us out.
   <-c.(diam.CloseNotifier).CloseNotify()
   log.Println("Server disconnected.")
-  return result_code_data
+  return session_id, result_code
 }
 
 // NewClient sends a CER to the server and then a DWR every 10 seconds.

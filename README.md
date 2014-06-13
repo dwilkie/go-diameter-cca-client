@@ -73,8 +73,16 @@ go get -u github.com/dwilkie/go-diameter-cca-client
 
 ### Testing Live Connection
 
+#### Example Client
+
 ```
 SERVER_ADDRESS=192.168.3.20:3868 go run go/src/github.com/dwilkie/go-diameter-cca-client/examples/beeline.go
+```
+
+#### Redis Queue
+
+```
+REDIS_PROVIDER=redis_url BEELINE_CHARGE_REQUEST_UPDATER_QUEUE=beeline_charge_request_updater_queue BEELINE_CHARGE_REQUEST_UPDATER_QUEUE=BeelineChargeRequestUpdater go-diameter-cca-client -queues=beeline_charge_request_queue
 ```
 
 ### Inspecting Packets with Wireshark
