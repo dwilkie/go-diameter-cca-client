@@ -2,7 +2,7 @@ package main
 
 import (
   "fmt"
-  "github.com/dwilkie/go-diameter-cca-client/client/beeline"
+  "github.com/dwilkie/go-diameter-cca-client/client"
   "github.com/benmanns/goworker"
 )
 
@@ -11,6 +11,7 @@ func init() {
 }
 
 func ChargeRequestWorker(queue string, args ...interface{}) error {
+  beeline.Charge("foo");
   fmt.Println("Hello, world!")
   return nil
 }

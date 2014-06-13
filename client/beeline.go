@@ -41,7 +41,7 @@ const (
   ServiceParameterValue2 = diamtype.OctetString("30201")
 )
 
-func start(msisdn string) {
+func Charge(msisdn string) {
   ssl := flag.Bool("ssl", false, "connect using SSL/TLS")
   parser, _ := diamdict.NewParser()
   parser.Load(bytes.NewReader(diamdict.DefaultXML))
