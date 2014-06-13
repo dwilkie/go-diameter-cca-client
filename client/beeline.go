@@ -7,11 +7,9 @@
 package beeline
 
 import (
-  "flag"
   "log"
   "math/rand"
   "net"
-  "os"
   "time"
   "bytes"
   "fmt"
@@ -33,49 +31,41 @@ const (
   CCRequestNumber = diamtype.Unsigned32(0)
   RequestedAction = diamtype.Enumerated(0x00)
   SubscriptionIdType = diamtype.Enumerated(0x00) // E164
-  SubscriptionIdData = diamtype.UTF8String("85560201158")
   ServiceIdentifier = diamtype.Unsigned32(0)
   ServiceParameterType1 = diamtype.Unsigned32(1)
   ServiceParameterValue1 = diamtype.OctetString("302")
   ServiceParameterType2 = diamtype.Unsigned32(2)
   ServiceParameterValue2 = diamtype.OctetString("30201")
+  ServerAddress = "192.168.3.20:3868"
 )
 
 func Charge(msisdn string) {
-  ssl := flag.Bool("ssl", false, "connect using SSL/TLS")
   parser, _ := diamdict.NewParser()
   parser.Load(bytes.NewReader(diamdict.DefaultXML))
   parser.Load(bytes.NewReader(diamdict.CreditControlXML))
-  flag.Parse()
   // ALL incoming messages are handled here.
   diam.HandleFunc("ALL", func(c diam.Conn, m *diam.Message) {
     log.Printf("Receiving message from %s", c.RemoteAddr().String())
     log.Println(m)
   })
   // Connect using the default handler and base.Dict.
-  addr := os.Getenv("SERVER_ADDRESS")
-  log.Println("Connecting to", addr)
-  log.Println("sending to:", msisdn)
+  log.Println("Connecting to", ServerAddress)
   var (
     c   diam.Conn
     err error
   )
-  if *ssl {
-    c, err = diam.DialTLS(addr, "", "", nil, nil)
-  } else {
-    c, err = diam.Dial(addr, nil, parser)
-  }
+  c, err = diam.Dial(ServerAddress, nil, parser)
   if err != nil {
     log.Fatal(err)
   }
-  go NewClient(c)
+  go NewClient(c, msisdn)
   // Wait until the server kick us out.
   <-c.(diam.CloseNotifier).CloseNotify()
   log.Println("Server disconnected.")
 }
 
 // NewClient sends a CER to the server and then a DWR every 10 seconds.
-func NewClient(c diam.Conn) {
+func NewClient(c diam.Conn, msisdn string) {
   // Build CCR
 
   parser, _ := diamdict.NewParser()
@@ -118,7 +108,7 @@ func NewClient(c diam.Conn) {
       // Subscription-Id-Type
       diam.NewAVP(450, 0x40, 0x0, SubscriptionIdType),
       // Subscription-Id-Data
-      diam.NewAVP(444, 0x40, 0x0, SubscriptionIdData),
+      diam.NewAVP(444, 0x40, 0x0, diamtype.UTF8String(msisdn)),
     },
   })
   m.NewAVP("Service-Parameter-Info", 0x40, 0x00, &diam.Grouped{

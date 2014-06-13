@@ -1,5 +1,5 @@
 {
-	"ImportPath": "go-diameter-cca-client",
+	"ImportPath": "github.com/dwilkie/go-diameter-cca-client",
 	"GoVersion": "go1.2.1",
 	"Deps": [
 		{
