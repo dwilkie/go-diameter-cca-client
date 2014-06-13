@@ -74,7 +74,7 @@ go get -u github.com/dwilkie/go-diameter-cca-client
 ### Testing Live Connection
 
 ```
-SERVER_ADDRESS=192.168.3.20:3868 go run go/src/github.com/dwilkie/go-diameter-cca-client/examples/client.go
+SERVER_ADDRESS=192.168.3.20:3868 go run go/src/github.com/dwilkie/go-diameter-cca-client/examples/beeline.go
 ```
 
 ### Inspecting Packets with Wireshark
