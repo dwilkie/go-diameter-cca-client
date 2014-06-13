@@ -47,8 +47,15 @@ func main() {
   parser.Load(bytes.NewReader(diamdict.DefaultXML))
   parser.Load(bytes.NewReader(diamdict.CreditControlXML))
   flag.Parse()
-  // ALL incoming messages are handled here.
-  diam.HandleFunc("ALL", func(c diam.Conn, m *diam.Message) {
+  // CCA incoming messages are handled here.
+  diam.HandleFunc("CCA", func(c diam.Conn, m *diam.Message) {
+    result_code_avp, err := m.FindAVP(268)
+    result_code_data := result_code_avp.Data.String()
+    log.Printf(result_code_data)
+    if err != nil {
+      log.Fatal(err)
+    }
+
     log.Printf("Receiving message from %s", c.RemoteAddr().String())
     log.Println(m)
   })
