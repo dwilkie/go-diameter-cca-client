@@ -16,7 +16,6 @@ import (
   "bytes"
   "fmt"
 
-  "github.com/benmanns/goworker"
   "github.com/fiorix/go-diameter/diam"
   "github.com/fiorix/go-diameter/diam/diamtype"
   "github.com/fiorix/go-diameter/diam/diamdict"
