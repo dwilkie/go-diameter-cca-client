@@ -1,1 +1,1 @@
-client: go-diameter-cca-client
+client: ./go-diameter-cca-client -queues="beeline_charge_request_queue"

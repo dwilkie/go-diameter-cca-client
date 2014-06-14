@@ -19,6 +19,7 @@ func init() {
 
 func BeelineChargeRequest(queue string, args ...interface{}) error {
   redis_uri := os.Getenv("REDIS_URI")
+  redis_auth := os.Getenv("REDIS_AUTH")
   charge_request_updater_queue := os.Getenv("BEELINE_CHARGE_REQUEST_UPDATER_QUEUE")
   charge_request_updater_worker := os.Getenv("BEELINE_CHARGE_REQUEST_UPDATER_WORKER")
 
@@ -26,6 +27,13 @@ func BeelineChargeRequest(queue string, args ...interface{}) error {
   if err != nil {
     fmt.Println(err)
     return err
+  }
+
+  if redis_auth != "" {
+    if _, err := c.Do("AUTH", redis_auth); err != nil {
+      c.Close()
+      return err
+    }
   }
 
   defer c.Close()
@@ -44,7 +52,7 @@ func BeelineChargeRequest(queue string, args ...interface{}) error {
 
   session_id, result_code := beeline.Charge(transaction_id, mobile_number)
 
-  json := fmt.Sprintf("{\"class\":\"%s\",\"args\":[%s,%s,%s,%s]}", charge_request_updater_worker, session_id, result_code, "beeline")
+  json := fmt.Sprintf("{\"class\":\"%s\",\"args\":[%s,%s]}", charge_request_updater_worker, session_id, result_code)
   queue_key := fmt.Sprintf("resque:queue:%s", charge_request_updater_queue)
 
   n, err := c.Do("RPUSH", queue_key, json)

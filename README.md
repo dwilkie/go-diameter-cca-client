@@ -73,19 +73,40 @@ go get -u github.com/dwilkie/go-diameter-cca-client
 
 ### Testing Live Connection
 
-#### Example Client
+#### Beeline
+
+##### Example Client
 
 ```
 SERVER_ADDRESS=192.168.3.20:3868 go run go/src/github.com/dwilkie/go-diameter-cca-client/examples/beeline.go
 ```
 
-#### Redis Queue
+##### Worker
+
+###### Using Foreman
 
 ```
-REDIS_PROVIDER=redis_url BEELINE_CHARGE_REQUEST_UPDATER_QUEUE=beeline_charge_request_updater_queue BEELINE_CHARGE_REQUEST_UPDATER_QUEUE=BeelineChargeRequestUpdater go-diameter-cca-client -queues=beeline_charge_request_queue
+forego start -e .env.production
 ```
 
-### Inspecting Packets with Wireshark
+###### Manually
+
+Manually start the worker with the following command:
+
+```
+REDIS_URI=redis_uri REDIS_AUTH=your_password BEELINE_CHARGE_REQUEST_UPDATER_QUEUE=beeline_charge_request_updater_queue BEELINE_CHARGE_REQUEST_UPDATER_WORKER=BeelineChargeRequestUpdater ./go-diameter-cca-client -queues="beeline_charge_request_queue"
+```
+
+where:
+
+* `REDIS_PROVIDER` is the full Redis URL including Authorization, Scheme and PORT. e.g. `redis://redis-user:redis_password@redis-host:port`
+* `REDIS_URI` is the Redis URL without Authorization and Scheme. e.g. `redis-user@redis-host:port`
+* `REDIS_AUTH` is you Redis password
+* `BEELINE_CHARGE_REQUEST_UPDATER_QUEUE` is the name of the queue for which jobs are pushed which handles updating charge requests for Beeline.
+* `BEELINE_CHARGE_REQUEST_UPDATER_WORKER` is the name of the worker class which handles updating charge requests for Beeline.
+* `-queues` is the name of the queue which handles sending charge requests to Beeline.
+
+#### Inspecting Packets with Wireshark
 
 Note you'll only be able to see the response packets because the request packets are encrypted through the VPN tunnel. But you can see the request from the client after it builds the AVPs.
 
