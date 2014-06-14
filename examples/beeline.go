@@ -45,14 +45,22 @@ func main() {
   parser.Load(bytes.NewReader(diamdict.DefaultXML))
   parser.Load(bytes.NewReader(diamdict.CreditControlXML))
   flag.Parse()
-  var result_code_data string
+  var result_code string
+  var session_id string
   // CCA incoming messages are handled here.
   diam.HandleFunc("CCA", func(c diam.Conn, m *diam.Message) {
     result_code_avp, err := m.FindAVP(268)
-    result_code_data = result_code_avp.Data.String()
+    result_code = result_code_avp.Data.String()
     if err != nil {
       log.Fatal(err)
     }
+
+    session_id_avp, err := m.FindAVP(263)
+    session_id = session_id_avp.Data.String()
+    if err != nil {
+      log.Fatal(err)
+    }
+
     c.Close()
     log.Printf("Receiving message from %s", c.RemoteAddr().String())
     log.Println(m)
@@ -76,7 +84,8 @@ func main() {
   go NewClient(c)
   // Wait until the server kick us out.
   <-c.(diam.CloseNotifier).CloseNotify()
-  log.Println(result_code_data)
+  log.Println(result_code)
+  log.Println(session_id)
   log.Println("Server disconnected.")
 }
 
