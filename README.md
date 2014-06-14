@@ -94,13 +94,13 @@ forego start -e .env.production
 Manually start the worker with the following command:
 
 ```
-REDIS_URI=redis_uri REDIS_AUTH=your_password BEELINE_CHARGE_REQUEST_UPDATER_QUEUE=beeline_charge_request_updater_queue BEELINE_CHARGE_REQUEST_UPDATER_WORKER=BeelineChargeRequestUpdater ./go-diameter-cca-client -queues="beeline_charge_request_queue"
+REDIS_PROVIDER=redis_uri REDIS_URL=redis_uri BEELINE_CHARGE_REQUEST_UPDATER_QUEUE=beeline_charge_request_updater_queue BEELINE_CHARGE_REQUEST_UPDATER_WORKER=BeelineChargeRequestUpdater ./go-diameter-cca-client -queues="beeline_charge_request_queue"
 ```
 
 where:
 
 * `REDIS_PROVIDER` is the full Redis URL including Authorization, Scheme and PORT. e.g. `redis://redis-user:redis_password@redis-host:port`
-* `REDIS_URI` is the Redis URL without Authorization and Scheme. e.g. `redis-user@redis-host:port`
+* `REDIS_URL` is the same as `REDIS_PROVIDER`
 * `REDIS_AUTH` is you Redis password
 * `BEELINE_CHARGE_REQUEST_UPDATER_QUEUE` is the name of the queue for which jobs are pushed which handles updating charge requests for Beeline.
 * `BEELINE_CHARGE_REQUEST_UPDATER_WORKER` is the name of the worker class which handles updating charge requests for Beeline.

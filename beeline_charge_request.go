@@ -6,7 +6,7 @@ import (
   "os"
   "github.com/dwilkie/go-diameter-cca-client/client"
   "github.com/benmanns/goworker"
-  "github.com/garyburd/redigo/redis"
+  "github.com/soveran/redisurl"
 )
 
 var (
@@ -18,24 +18,10 @@ func init() {
 }
 
 func BeelineChargeRequest(queue string, args ...interface{}) error {
-  redis_uri := os.Getenv("REDIS_URI")
-  redis_auth := os.Getenv("REDIS_AUTH")
   charge_request_updater_queue := os.Getenv("BEELINE_CHARGE_REQUEST_UPDATER_QUEUE")
   charge_request_updater_worker := os.Getenv("BEELINE_CHARGE_REQUEST_UPDATER_WORKER")
 
-  c, err := redis.Dial("tcp", redis_uri)
-  if err != nil {
-    fmt.Println(err)
-    return err
-  }
-
-  if redis_auth != "" {
-    if _, err := c.Do("AUTH", redis_auth); err != nil {
-      c.Close()
-      return err
-    }
-  }
-
+  c, err := redisurl.Connect()
   defer c.Close()
 
   transaction_id, ok := args[0].(string)

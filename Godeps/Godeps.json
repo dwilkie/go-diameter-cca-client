@@ -30,6 +30,10 @@
 		{
 			"ImportPath": "github.com/garyburd/redigo/redis",
 			"Rev": "1c7841955920910958c71b1cc1a03f628267d468"
+		},
+		{
+			"ImportPath": "github.com/soveran/redisurl",
+			"Rev": "ac42ec99510b5f21d11560d316adcc5bc41f0915"
 		}
 	]
 }
