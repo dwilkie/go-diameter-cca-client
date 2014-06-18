@@ -8,9 +8,7 @@ package beeline
 
 import (
   "log"
-  "math/rand"
   "bytes"
-  "fmt"
 
   "github.com/fiorix/go-diameter/diam"
   "github.com/fiorix/go-diameter/diam/diamtype"
@@ -70,7 +68,7 @@ func Charge(transaction_id string, msisdn string) (session_id string, result_cod
   if err != nil {
     log.Fatal(err)
   }
-  go NewClient(c, msisdn)
+  go NewClient(c, transaction_id, msisdn)
   // Wait until the server kick us out.
   <-c.(diam.CloseNotifier).CloseNotify()
   log.Println("Server disconnected.")
@@ -78,7 +76,7 @@ func Charge(transaction_id string, msisdn string) (session_id string, result_cod
 }
 
 // NewClient sends a CER to the server and then a DWR every 10 seconds.
-func NewClient(c diam.Conn, msisdn string) {
+func NewClient(c diam.Conn, transaction_id string, msisdn string) {
   // Build CCR
 
   parser, _ := diamdict.NewParser()
@@ -87,7 +85,7 @@ func NewClient(c diam.Conn, msisdn string) {
 
   m := diam.NewRequest(272, 4, parser)
   // Add AVPs
-  m.NewAVP("Session-Id", 0x40, 0x00, diamtype.UTF8String(fmt.Sprintf("%v", rand.Uint32())))
+  m.NewAVP("Session-Id", 0x40, 0x00, diamtype.UTF8String(transaction_id))
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
   m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
   m.NewAVP("Destination-Realm", 0x40, 0x00, DestinationRealm)
