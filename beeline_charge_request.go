@@ -38,7 +38,7 @@ func BeelineChargeRequest(queue string, args ...interface{}) error {
 
   session_id, result_code := beeline.Charge(transaction_id, mobile_number)
 
-  json := fmt.Sprintf("{\"class\":\"%s\",\"args\":[%s,%s]}", charge_request_updater_worker, session_id, result_code)
+  json := fmt.Sprintf("{\"class\":\"%s\",\"args\":[\"%s\",\"%s\"]}", charge_request_updater_worker, session_id, result_code)
   queue_key := fmt.Sprintf("resque:queue:%s", charge_request_updater_queue)
 
   n, err := c.Do("RPUSH", queue_key, json)
