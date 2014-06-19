@@ -9,6 +9,8 @@ package beeline
 import (
   "log"
   "bytes"
+  "math/rand"
+  "net"
 
   "github.com/fiorix/go-diameter/diam"
   "github.com/fiorix/go-diameter/diam/diamtype"
@@ -59,7 +61,6 @@ func Charge(transaction_id string, msisdn string) (session_id string, result_cod
     c.Close()
   })
   // Connect using the default handler and base.Dict.
-  log.Println("Connecting to", ServerAddress)
   var (
     c   diam.Conn
     err error
@@ -71,19 +72,35 @@ func Charge(transaction_id string, msisdn string) (session_id string, result_cod
   go NewClient(c, transaction_id, msisdn)
   // Wait until the server kick us out.
   <-c.(diam.CloseNotifier).CloseNotify()
-  log.Println("Server disconnected.")
   return session_id, result_code
 }
 
 // NewClient sends a CER to the server and then a DWR every 10 seconds.
 func NewClient(c diam.Conn, transaction_id string, msisdn string) {
-  // Build CCR
-
   parser, _ := diamdict.NewParser()
   parser.Load(bytes.NewReader(diamdict.DefaultXML))
   parser.Load(bytes.NewReader(diamdict.CreditControlXML))
 
-  m := diam.NewRequest(272, 4, parser)
+  // Build CER
+  m := diam.NewRequest(257, 0, parser)
+  // Add AVPs
+  m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
+  m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
+  m.NewAVP("Origin-State-Id", 0x40, 0x00, diamtype.Unsigned32(rand.Uint32()))
+  m.NewAVP("Auth-Application-Id", 0x40, 0x00, AuthApplicationId)
+  laddr := c.LocalAddr()
+  ip, _, _ := net.SplitHostPort(laddr.String())
+  m.NewAVP("Host-IP-Address", 0x40, 0x0, diamtype.Address(net.ParseIP(ip)))
+  m.NewAVP("Vendor-Id", 0x40, 0x0, VendorId)
+  m.NewAVP("Product-Name", 0x00, 0x0, ProductName)
+
+  // Send message to the connection
+  if _, err := m.WriteTo(c); err != nil {
+    log.Fatal("Write failed:", err)
+  }
+
+  // Build CCR
+  m = diam.NewRequest(272, 4, parser)
   // Add AVPs
   m.NewAVP("Session-Id", 0x40, 0x00, diamtype.UTF8String(transaction_id))
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
