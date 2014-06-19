@@ -35,9 +35,9 @@ const (
   SubscriptionIdData = diamtype.UTF8String("85560201158")
   ServiceIdentifier = diamtype.Unsigned32(0)
   ServiceParameterType1 = diamtype.Unsigned32(1)
-  ServiceParameterValue1 = diamtype.OctetString("302")
+  ServiceParameterValue1 = diamtype.OctetString("401")
   ServiceParameterType2 = diamtype.Unsigned32(2)
-  ServiceParameterValue2 = diamtype.OctetString("30201")
+  ServiceParameterValue2 = diamtype.OctetString("401")
 )
 
 func main() {
