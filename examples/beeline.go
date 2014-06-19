@@ -11,6 +11,7 @@ import (
   "log"
   "math/rand"
   "os"
+  "net"
   "bytes"
   "fmt"
 
@@ -97,7 +98,26 @@ func NewClient(c diam.Conn) {
   parser.Load(bytes.NewReader(diamdict.DefaultXML))
   parser.Load(bytes.NewReader(diamdict.CreditControlXML))
 
-  m := diam.NewRequest(272, 4, parser)
+  m := diam.NewRequest(257, 0, parser)
+  // Add AVPs
+  m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
+  m.NewAVP("Origin-Realm", 0x40, 0x00, Realm)
+  m.NewAVP("Origin-State-Id", 0x40, 0x00, diamtype.Unsigned32(rand.Uint32()))
+  m.NewAVP("Auth-Application-Id", 0x40, 0x00, AuthApplicationId)
+  laddr := c.LocalAddr()
+  ip, _, _ := net.SplitHostPort(laddr.String())
+  m.NewAVP("Host-IP-Address", 0x40, 0x0, diamtype.Address(net.ParseIP(ip)))
+  m.NewAVP("Vendor-Id", 0x40, 0x0, VendorId)
+  m.NewAVP("Product-Name", 0x00, 0x0, ProductName)
+
+  log.Printf("Sending message to %s", c.RemoteAddr().String())
+  log.Println(m.String())
+  // Send message to the connection
+  if _, err := m.WriteTo(c); err != nil {
+    log.Fatal("Write failed:", err)
+  }
+
+  m = diam.NewRequest(272, 4, parser)
   // Add AVPs
   m.NewAVP("Session-Id", 0x40, 0x00, diamtype.UTF8String(fmt.Sprintf("%v", rand.Uint32())))
   m.NewAVP("Origin-Host", 0x40, 0x00, Identity)
