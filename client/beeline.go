@@ -29,9 +29,9 @@ const (
   SubscriptionIdType = diamtype.Enumerated(0x00) // E164
   ServiceIdentifier = diamtype.Unsigned32(0)
   ServiceParameterType1 = diamtype.Unsigned32(1)
-  ServiceParameterValue1 = diamtype.OctetString("302")
+  ServiceParameterValue1 = diamtype.OctetString("401")
   ServiceParameterType2 = diamtype.Unsigned32(2)
-  ServiceParameterValue2 = diamtype.OctetString("30201")
+  ServiceParameterValue2 = diamtype.OctetString("401")
   ServerAddress = "192.168.3.20:3868"
 )
 
