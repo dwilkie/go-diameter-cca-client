@@ -2,6 +2,18 @@
 
 A Diameter Credit-Control Application Client written in Go
 
+## How it works
+
+The `Procfile` contains the command to run the binary which is compiled from the `main` package and named after the project name `go-diameter-cca-client`.
+
+The the `main()` function is containted within `worker.go` which calls `goworker.Work()`.
+
+In `beeline_charge_request.go` which is also in the `main` package, the `init()` function registers the `BeelineChargeRequest` worker. The `BeelineChargeRequest` function is also defined within `beeline_charge_request.go` and accepts the `queue` and the `args` for the job. From the args it extracts the `transaction_id` and `mobile_number` and calls `beeline.Charge(transaction_id, mobile_number)` which returns the `session_id` and `result_code` of the charge request. It then uses the `redisurl` package to connect to the redis server and enqueues a job to the `beeline_charge_request_updater` queue with the `session_id` and `result_code`.
+
+Inside the file `client/beeline.go` the package `beeline` is defined. The function `Charge()` which is called by the function `BeelineChargeRequest` (explained above) accepts a `transaction_id` and a `mobile_number` and returns the `session_id` and `result_code`. It first creates a `Parser` which loads the definitions of `diamdict.DefaultXML` and `diamdict.CreditControlXML`. It then defines a handler which extracts the `session_id` and `result_code` from the `CCA` response. It then connects to the `ServerAddress` passing the defined `handler` to the `Dial()` command. The `Dial()` command return the `connection` and `NewClient()` is called with the `connection`, `transaction_id` and `mobile_number`.
+
+`NewClient` builds a `CER` request and writes the request to the `connection`. It then builds a `CCR` request using the `transaction_id` and the `mobile_number` and writes the request to the `connection`. The responses are handled by the `handler` which extracts the `result_code` and `session_id` from the `CCA`.
+
 ## Development
 
 Use [forego](https://github.com/ddollar/forego) for development.
