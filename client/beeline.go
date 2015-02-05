@@ -34,10 +34,9 @@ const (
   ServiceParameterValue1 = diamtype.OctetString("401")
   ServiceParameterType2 = diamtype.Unsigned32(2)
   ServiceParameterValue2 = diamtype.OctetString("401")
-  ServerAddress = "192.168.3.20:3868"
 )
 
-func Charge(transaction_id string, msisdn string) (session_id string, result_code string) {
+func Charge(transaction_id string, msisdn string, server_address string) (session_id string, result_code string) {
   parser, _ := diamdict.NewParser()
   parser.Load(bytes.NewReader(diamdict.DefaultXML))
   parser.Load(bytes.NewReader(diamdict.CreditControlXML))
@@ -65,7 +64,7 @@ func Charge(transaction_id string, msisdn string) (session_id string, result_cod
     c   diam.Conn
     err error
   )
-  c, err = diam.Dial(ServerAddress, nil, parser)
+  c, err = diam.Dial(server_address, nil, parser)
   if err != nil {
     log.Fatal(err)
   }
@@ -78,7 +77,7 @@ func Charge(transaction_id string, msisdn string) (session_id string, result_cod
 // NewClient sends a CER to the server and then a DWR every 10 seconds.
 func NewClient(c diam.Conn, transaction_id string, msisdn string) {
   parser, _ := diamdict.NewParser()
-  parser.Load(bytes.NewReader(diamdict.DefaultXML))
+//  parser.Load(bytes.NewReader(diamdict.DefaultXML))
   parser.Load(bytes.NewReader(diamdict.CreditControlXML))
 
   // Build CER

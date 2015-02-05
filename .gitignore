@@ -1,2 +1,3 @@
 .env.production
 go-diameter-cca-client
+Godeps/_workspace

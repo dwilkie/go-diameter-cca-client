@@ -3,24 +3,9 @@
 	"GoVersion": "go1.2.1",
 	"Deps": [
 		{
-			"ImportPath": "code.google.com/p/vitess/go/pools",
-			"Comment": "weekly:weekly.2012-08-23.go.4fdf6aa4f602-740",
-			"Rev": "20aec5105bdc7ae2bc1f39deb44ec3fd5596716d"
-		},
-		{
-			"ImportPath": "code.google.com/p/vitess/go/sync2",
-			"Comment": "weekly:weekly.2012-08-23.go.4fdf6aa4f602-740",
-			"Rev": "20aec5105bdc7ae2bc1f39deb44ec3fd5596716d"
-		},
-		{
-			"ImportPath": "github.com/benmanns/goworker",
-			"Comment": "v0.1.0-14-ged77c6c",
-			"Rev": "ed77c6c17b88c15c0850b24236cac846b9179c26"
-		},
-		{
-			"ImportPath": "github.com/cihub/seelog",
-			"Comment": "go1.1-24-g83d0dca",
-			"Rev": "83d0dcad636b63c066856045962befa246e00c79"
+			"ImportPath": "github.com/bitly/go-simplejson",
+			"Comment": "v0.4.3-28-g3378bdc",
+			"Rev": "3378bdcb5cebedcbf8b5750edee28010f128fe24"
 		},
 		{
 			"ImportPath": "github.com/fiorix/go-diameter/diam",
@@ -32,8 +17,8 @@
 			"Rev": "1c7841955920910958c71b1cc1a03f628267d468"
 		},
 		{
-			"ImportPath": "github.com/soveran/redisurl",
-			"Rev": "ac42ec99510b5f21d11560d316adcc5bc41f0915"
+			"ImportPath": "github.com/jrallison/go-workers",
+			"Rev": "337a0b7bd0a4ad878d8f68e55f2208ab0889bebd"
 		}
 	]
 }
